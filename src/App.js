@@ -27,9 +27,9 @@ function App() {
         
         <Switch>
           <SearchContext.Provider value={{inputVal, query}}>
-            <Route path="/" component={Home} exact/>
             <Route path="/About" component={About} exact/>
             <Route path="/Details/:id" component={Details} exact/>
+            <Route path="/" component={Home}/>
           </SearchContext.Provider>
         </Switch>
         <Footer />
