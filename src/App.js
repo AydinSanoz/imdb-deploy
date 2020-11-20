@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import {Footer} from './components/Footer';
+import {Header} from './components/Header';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Details, About, Home} from './Pages';
+import {useState} from 'react';
+import {SearchContext} from "./context"
+import { VideoList } from './Pages/Sections';
 
+let query = '';
 function App() {
+  const [inputVal, setInputVal] = useState('');
+  
+
+  function onChange(val) {
+    setInputVal(val.target.value);
+  }
+
+  function onClick() {
+    query = inputVal;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Header onChange={onChange} onClick={onClick} />
+        
+        <Switch>
+          <SearchContext.Provider value={{inputVal, query}}>
+            <Route path="/" component={Home} exact/>
+            <Route path="/About" component={About} exact/>
+            <Route path="/Details/:id" component={Details} exact/>
+          </SearchContext.Provider>
+        </Switch>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }
-
 export default App;
